@@ -2,75 +2,80 @@
 #include <stdlib.h>
 
 typedef struct {
-    int capacity;
-    int* arr;
+    unsigned int cap;
+    unsigned int length;
+    int* elements;
 } DynamicArray;
 
-DynamicArray* newDynamicArray(int capacity);
-int sizeDynamicArray(DynamicArray* arr);
-int getDynamicArray(DynamicArray* arr, int idx);
-int setDynamicArray(DynamicArray* arr, int idx, int val);
-void resizeDynamicArray(DynamicArray* arr);
+DynamicArray* newDyn(unsigned int cap);
+void destroyDyn(DynamicArray* dyn);
+void pushDyn(DynamicArray* dyn, int val);
+int getDyn(DynamicArray* dyn, unsigned int idx);
+int popDyn(DynamicArray* dyn);
+void insertDyn(DynamicArray* dyn);
+void extendDyn(DynamicArray* dyn);
 
-DynamicArray* newDynamicArray(int capacity) {
-    DynamicArray* d = (DynamicArray*) malloc(sizeof(DynamicArray));
-    d->capacity = capacity;
-    d->arr = (int*) malloc(sizeof(int) * capacity);
+DynamicArray* newDyn(unsigned int cap) {
+    DynamicArray* dyn = (DynamicArray*) malloc(sizeof(DynamicArray));
+    dyn->cap = cap;
+    dyn->elements = (int*) malloc(sizeof(int) * cap);
 
-    return d;
+    return dyn;
 }
 
-int getDynamicArray(DynamicArray* arr, int idx) {
-    if (idx < 0 || arr->capacity <= idx) {
-        return 0;
-    }
-
-    return arr->arr[idx];
+void destroyDyn(DynamicArray* dyn) {
+    free(dyn->elements);
+    free(dyn);
 }
 
-int setDynamicArray(DynamicArray* arr, int idx, int val) {
-    if (idx >= 0 && arr->capacity <= idx) {
-        resizeDynamicArray(arr);
+void pushDyn(DynamicArray* dyn, int val) {
+    if (dyn->length >= dyn->cap) {
+        extendDyn(dyn);
     }
 
-    arr->arr[idx] = val;
-    return 1;
+    dyn->elements[dyn->length++] = val;
 }
 
-int sizeDynamicArray(DynamicArray* arr) {
-    int size = 0;
-
-    while(arr->arr[size] != 0) {
-        size++;
+int getDyn(DynamicArray* dyn, unsigned int idx) {
+    if (idx >= dyn->cap) {
+        return -1;
     }
 
-    return size;
+    return dyn->elements[idx];
 }
 
-void resizeDynamicArray(DynamicArray* arr) {
-    arr->capacity = arr->capacity * 2;
-    int* extended = (int*) malloc(sizeof(int) * arr->capacity);
-
-    for (int i = 0; i < arr->capacity; i++) {
-        extended[i] = arr->arr[i];
+int popDyn(DynamicArray* dyn) {
+    if (dyn->length == 0) {
+        return -1;
     }
 
-    free(arr->arr);
-    arr->arr = extended;
+    return dyn->elements[--dyn->length];
+}
+
+void extendDyn(DynamicArray* dyn) {
+    dyn->cap = dyn->cap * 2;
+    int* extendedElements = (int*) malloc(sizeof(int) * dyn->cap);
+
+    for (unsigned int i = 0; i < dyn->length; i++) {
+        extendedElements[i] = dyn->elements[i];
+    }
+
+    free(dyn->elements);
+    dyn->elements = extendedElements;
 }
 
 int main() {
-    DynamicArray* d = newDynamicArray(2);
-    
-    setDynamicArray(d, 0, 23);
-    setDynamicArray(d, 1, 51);
-    setDynamicArray(d, 2, 322);
+    DynamicArray* dyn = newDyn(2);
 
-    printf("%d\n", d->capacity);
-    printf("%d\n", sizeDynamicArray(d));
-    printf("%d\n", getDynamicArray(d, 0));
+    pushDyn(dyn, 2);
+    pushDyn(dyn, 5);
+    pushDyn(dyn, 10);
 
-    free(d);
+    printf("%d\n", popDyn(dyn));
+    printf("%d\n", popDyn(dyn));
+    printf("%d\n", popDyn(dyn));
+
+    destroyDyn(dyn);
 
     return 0;
 }
