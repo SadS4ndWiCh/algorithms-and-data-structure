@@ -1,5 +1,10 @@
-all: main.c
-	@gcc main.c -o out -Wall -Wextra -pedantic -std=c99
+.PHONY: run test clean
 
-clean: out
-	@rm -fr ./out
+test: build-test
+	./test/test
+
+build-test: ./test/main.c
+	@gcc ./test/main.c ./src/list.c -o ./test/test -Wall -Wextra -pedantic -std=c99
+
+clean: ./test/test
+	@rm -fr ./test/test
