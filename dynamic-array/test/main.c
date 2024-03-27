@@ -3,17 +3,17 @@
 #include "../src/list.h"
 
 int main() {
-    List* dyn = newDyn(2);
+    List* l = List_new(2);
 
-    pushDyn(dyn, 2);
-    pushDyn(dyn, 5);
-    pushDyn(dyn, 10);
+    List_push(l, 2);
+    List_push(l, 5);
+    List_push(l, 10);
 
-    printf("%d\n", popDyn(dyn));
-    printf("%d\n", popDyn(dyn));
-    printf("%d\n", popDyn(dyn));
+    printf("%d\n", List_pop(l));
+    printf("%d\n", List_pop(l));
+    printf("%d\n", List_pop(l));
 
-    destroyDyn(dyn);
+    List_destroy(l);
 
     return 0;
 }

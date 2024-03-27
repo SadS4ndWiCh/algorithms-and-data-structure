@@ -2,25 +2,27 @@
 
 #include "linkedlist.h"
 
-LinkedList* newLinkedList() {
+LinkedList* LinkedList_new() {
     return (LinkedList*) malloc(sizeof(LinkedList));
 }
 
-void pushLinkedList(LinkedList* l, int val) {
+void LinkedList_push(LinkedList* l, int val) {
     Node* node = (Node*) malloc(sizeof(Node));
     node->value = val;
-
+    
     if (l->head == NULL) {
         l->head = node;
-    } else {
-        l->tail->next = node;
-        node->prev = l->tail;
+        l->tail = node;
+        return;
     }
 
+    l->tail->next = node;
+    node->prev = l->tail;
     l->tail = node;
+
 }
 
-Node* getLinkedList(LinkedList* l, int val) {
+Node* LinkedList_get(LinkedList* l, int val) {
     Node* curr = l->head;
 
     while (curr != NULL && curr->value != val) {
@@ -30,37 +32,34 @@ Node* getLinkedList(LinkedList* l, int val) {
     return curr;
 }
 
-void removeLinkedList(LinkedList* l, int val) {
-    Node* node = getLinkedList(l, val);
+void LinkedList_remove(LinkedList* l, int val) {
+    Node* node = LinkedList_get(l, val);
 
     if (node == NULL) {
         return;
-    } else if (node == l->head && node == l->tail) {
-        l->head = NULL;
-        l->tail = NULL;
-    } else if (node == l->tail) {
-        l->tail = l->tail->prev;
-    } else if (node == l->head) {
-        l->head = l->head->next;
-    } else {
+    }
+
+    if (node->prev != NULL) {
         node->prev->next = node->next;
+    }
+
+    if (node->next != NULL) {
         node->next->prev = node->prev;
     }
 
     free(node);
 }
 
-void destroyLinkedList(LinkedList* l) {
-    Node* prev = NULL;
-    Node* curr = l->tail;
+void LinkedList_destroy(LinkedList* l) {
+    Node* curr = l->head;
+    Node* next = NULL;
 
     while (curr != NULL) {
-        prev = curr->prev;
+        next = curr->next;
 
-        curr->prev = NULL;
         free(curr);
 
-        curr = prev;
+        curr = next;
     }
 
     free(l);

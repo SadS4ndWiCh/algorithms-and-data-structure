@@ -4,13 +4,13 @@ typedef struct Node {
     struct Node* prev;
 } Node;
 
-typedef struct {
-    struct Node* head;
-    struct Node* tail;
+typedef struct LinkedList {
+    Node* head;
+    Node* tail;
 } LinkedList;
 
-LinkedList* newLinkedList();
-void pushLinkedList(LinkedList* l, int val);
-Node* getLinkedList(LinkedList* l, int val);
-void removeLinkedList(LinkedList* l, int val);
-void destroyLinkedList(LinkedList* l);
+LinkedList* LinkedList_new();
+void LinkedList_destroy(LinkedList* l);
+Node* LinkedList_get(LinkedList* l, int val);
+void LinkedList_push(LinkedList* l, int val);
+void LinkedList_remove(LinkedList* l, int val);

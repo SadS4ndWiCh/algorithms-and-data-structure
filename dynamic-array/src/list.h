@@ -4,10 +4,10 @@ typedef struct {
     int* elements;
 } List;
 
-List* newDyn(unsigned int cap);
-void destroyDyn(List* dyn);
-void pushDyn(List* dyn, int val);
-int getDyn(List* dyn, unsigned int idx);
-int popDyn(List* dyn);
-void insertDyn(List* dyn);
-void extendDyn(List* dyn);
+List* List_new(unsigned int cap);
+void List_destroy(List* l);
+void List_push(List* l, int val);
+int List_get(List* l, unsigned int idx);
+int List_pop(List* l);
+void List_insert(List* l);
+void List_extend(List* l);

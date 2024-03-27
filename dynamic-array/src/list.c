@@ -2,51 +2,51 @@
 
 #include "list.h"
 
-List* newDyn(unsigned int cap) {
-    List* dyn = (List*) malloc(sizeof(List));
-    dyn->cap = cap;
-    dyn->elements = (int*) malloc(sizeof(int) * cap);
+List* List_new(unsigned int cap) {
+    List* l = (List*) malloc(sizeof(List));
+    l->cap = cap;
+    l->elements = (int*) malloc(sizeof(int) * cap);
 
-    return dyn;
+    return l;
 }
 
-void destroyDyn(List* dyn) {
-    free(dyn->elements);
-    free(dyn);
+void List_destroy(List* l) {
+    free(l->elements);
+    free(l);
 }
 
-void pushDyn(List* dyn, int val) {
-    if (dyn->length >= dyn->cap) {
-        extendDyn(dyn);
+void List_push(List* l, int val) {
+    if (l->length >= l->cap) {
+        List_extend(l);
     }
 
-    dyn->elements[dyn->length++] = val;
+    l->elements[l->length++] = val;
 }
 
-int getDyn(List* dyn, unsigned int idx) {
-    if (idx >= dyn->cap) {
+int List_get(List* l, unsigned int idx) {
+    if (idx >= l->cap) {
         return -1;
     }
 
-    return dyn->elements[idx];
+    return l->elements[idx];
 }
 
-int popDyn(List* dyn) {
-    if (dyn->length == 0) {
+int List_pop(List* l) {
+    if (l->length == 0) {
         return -1;
     }
 
-    return dyn->elements[--dyn->length];
+    return l->elements[--l->length];
 }
 
-void extendDyn(List* dyn) {
-    dyn->cap = dyn->cap * 2;
-    int* extendedElements = (int*) malloc(sizeof(int) * dyn->cap);
+void List_extend(List* l) {
+    l->cap = l->cap * 2;
+    int* extendedElements = (int*) malloc(sizeof(int) * l->cap);
 
-    for (unsigned int i = 0; i < dyn->length; i++) {
-        extendedElements[i] = dyn->elements[i];
+    for (unsigned int i = 0; i < l->length; i++) {
+        extendedElements[i] = l->elements[i];
     }
 
-    free(dyn->elements);
-    dyn->elements = extendedElements;
+    free(l->elements);
+    l->elements = extendedElements;
 }
