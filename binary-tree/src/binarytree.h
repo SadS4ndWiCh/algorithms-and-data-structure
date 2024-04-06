@@ -8,7 +8,7 @@ typedef struct BinaryTree {
     struct Node* root;
 } BinaryTree;
 
-BinaryTree* BinaryTree_new();
+BinaryTree* BinaryTree_new(void);
 void BinaryTree_destroy(BinaryTree* bt);
 void BinaryTree_push(BinaryTree* bt, int value);
 Node* BinaryTree_get(BinaryTree* bt, int value);

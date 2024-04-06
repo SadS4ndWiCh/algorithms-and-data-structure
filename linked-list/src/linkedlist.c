@@ -2,7 +2,7 @@
 
 #include "linkedlist.h"
 
-LinkedList* LinkedList_new() {
+LinkedList* LinkedList_new(void) {
     return (LinkedList*) malloc(sizeof(LinkedList));
 }
 

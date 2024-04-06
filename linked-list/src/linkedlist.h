@@ -9,7 +9,7 @@ typedef struct LinkedList {
     Node* tail;
 } LinkedList;
 
-LinkedList* LinkedList_new();
+LinkedList* LinkedList_new(void);
 void LinkedList_destroy(LinkedList* l);
 Node* LinkedList_get(LinkedList* l, int val);
 void LinkedList_push(LinkedList* l, int val);

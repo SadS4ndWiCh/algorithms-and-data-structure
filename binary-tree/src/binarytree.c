@@ -2,7 +2,7 @@
 
 #include "binarytree.h"
 
-BinaryTree* BinaryTree_new() {
+BinaryTree* BinaryTree_new(void) {
     return (BinaryTree*) malloc(sizeof(BinaryTree));
 }
 
