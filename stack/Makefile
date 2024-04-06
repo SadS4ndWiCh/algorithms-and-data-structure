@@ -1,12 +1,11 @@
-NAME := stack
+INCLUDES := ./src/stack.c
+FLAGS := -Wall -Wextra -pedantic -std=c99
 
-.PHONY: run test clean
+.PHONY: test clean
 
-test: build-test
-	./test/test
-
-build-test: ./test/main.c
-	@gcc ./test/main.c ./src/${NAME}.c -o ./test/test -Wall -Wextra -pedantic -std=c99
+test:
+	@gcc ./test/main.c ${INCLUDES} -o ./test/test ${FLAGS}
+	@./test/test
 
 clean: ./test/test
 	@rm -fr ./test/test
