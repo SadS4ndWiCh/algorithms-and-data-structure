@@ -1,7 +1,7 @@
 typedef struct Node {
-    int value;
     struct Node* left;
     struct Node* right;
+    int value;
 } Node;
 
 typedef struct BinaryTree {
